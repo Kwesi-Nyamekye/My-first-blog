@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def starting_page(request):
-    return 
+    return render(request, "Blog/index.html")
 
 def posts(request):
     return
