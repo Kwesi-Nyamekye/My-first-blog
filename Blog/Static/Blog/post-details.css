@@ -50,3 +50,30 @@ body {
     font-weight: bold;
 }
 
+main {
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 90%;
+    max-width: 90rem;
+    background-color: #fff; /* Change to your desired background color */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+main p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333; 
+}
+main {
+    font-family: "Lato", sans-serif;
+    font-size: 16px; 
+    line-height: 1.6; 
+    color: #333; 
+    font-weight: bold;
+}
+
+main p {
+    font-size: 14px; 
+    margin-bottom: 1em;
+}
