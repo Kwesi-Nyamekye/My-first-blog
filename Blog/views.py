@@ -7,5 +7,5 @@ def starting_page(request):
 def posts(request):
     return render(request, "Blog/all-posts.html")
 
-def posts_details(request):
-    return
+def posts_details(request, slug):
+    return render(request, "Blog/post-detail.html")
