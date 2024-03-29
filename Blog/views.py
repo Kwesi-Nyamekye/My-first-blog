@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from datetime import date
 
-All_Posts = [
+POSTS = [
     {
         "slug" : "hike-in-the-mountains",
         "image" : "bm.jpg",
@@ -21,10 +21,10 @@ All_Posts = [
     },
     {
         "slug" : "hike-in-the-mountains",
-        "image" : "bm.jpg",
+        "image" : "plants.jpg",
         "author" : "Nyamekye",
         "date" : date(2024, 3, 23),
-        "title" : "Mountain Hiking ",
+        "title" : "Nature ",
         "excerpt" : " is simply dummy text of the printing and typesetting industry",
         " content" : ''' 
             is simply dummy text of the printing and typesetting industry. 
@@ -37,7 +37,7 @@ All_Posts = [
         "image" : "bm.jpg",
         "author" : "Nyamekye",
         "date" : date(2021, 3, 27),
-        "title" : "Mountain Hiking ",
+        "title" : "Programming ",
         "excerpt" : " is simply dummy text of the printing and typesetting industry",
         " content" : ''' It has survived not only five centuries, but also the leap into 
             electronic typesetting, remaining essentially unchanged. It was 
@@ -52,14 +52,19 @@ def get_date(post):
 
 # Create your views here.
 def starting_page(request):
-    sorted_posts = sorted(All_Posts, key=get_date)
+    sorted_posts = sorted(POSTS, key=get_date)
     latest_posts = sorted_posts[-3:]
     return render(request, "Blog/index.html", {
         "posts": latest_posts
     })
 
 def posts(request):
-    return render(request, "Blog/all-posts.html")
+    return render(request, "Blog/all-posts.html", {
+        "all_posts": POSTS
+    })
 
 def posts_details(request, slug):
-    return render(request, "Blog/post-detail.html")
+    identified_post = next(post for post in POSTS if post['slug'] == slug)
+    return render(request, "Blog/post-detail.html", {
+        "post": identified_post
+    })
