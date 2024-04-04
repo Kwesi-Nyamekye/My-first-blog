@@ -1,70 +1,22 @@
-from django.shortcuts import render
-from datetime import date
-
-POSTS = [
-    {
-        "slug" : "hike-in-the-mountains",
-        "image" : "bm.jpg",
-        "author" : "Nyamekye",
-        "date" : date(2024, 3, 21),
-        "title" : "Mountain Hiking ",
-        "excerpt" : " is simply dummy text of the printing and typesetting industry",
-        " content" : ''' 
-            when an unknown printer took a galley of type 
-            and scrambled it to make a type specimen book. 
-
-            It has survived not only five centuries, but also the leap into 
-            electronic typesetting, remaining essentially unchanged. It was 
-            popularised in the 1960s with the release
-            of Letraset sheets containing Lorem Ipsum passages, and more recently 
-            '''
-    },
-    {
-        "slug" : "hike-in-the-mountains",
-        "image" : "plants.jpg",
-        "author" : "Nyamekye",
-        "date" : date(2024, 3, 23),
-        "title" : "Nature ",
-        "excerpt" : " is simply dummy text of the printing and typesetting industry",
-        " content" : ''' 
-            is simply dummy text of the printing and typesetting industry. 
-            Lorem Ipsum has been the industry's standard dummy text ever 
-            since the 1500s, when an unknown printer took a galley of type 
-            and scrambled it to make a type specimen book. '''
-    },
-    {
-        "slug" : "hike-in-the-mountains",
-        "image" : "bm.jpg",
-        "author" : "Nyamekye",
-        "date" : date(2021, 3, 27),
-        "title" : "Programming ",
-        "excerpt" : " is simply dummy text of the printing and typesetting industry",
-        " content" : ''' It has survived not only five centuries, but also the leap into 
-            electronic typesetting, remaining essentially unchanged. It was 
-            popularised in the 1960s with the release
-            of Letraset sheets containing Lorem Ipsum passages, and more recently 
-            '''
-    }
-]
-
-def get_date(post):
-    return post['date']
+from django.shortcuts import render, get_object_or_404
+from .models import Post
 
 # Create your views here.
 def starting_page(request):
-    sorted_posts = sorted(POSTS, key=get_date)
-    latest_posts = sorted_posts[-3:]
+    latest_posts = Post.objects.all().order_by("-date")[:3]
     return render(request, "Blog/index.html", {
         "posts": latest_posts
     })
 
 def posts(request):
+    all_posts = Post.objects.all().order_by("-date")
     return render(request, "Blog/all-posts.html", {
-        "all_posts": POSTS
+        "all_posts": all_posts
     })
 
 def posts_details(request, slug):
-    identified_post = next(post for post in POSTS if post['slug'] == slug)
+    identified_post = get_object_or_404(Post, slug=slug)
     return render(request, "Blog/post-detail.html", {
-        "post": identified_post
+        "post": identified_post,
+        "post_tags" : identified_post.tag.all(),
     })
